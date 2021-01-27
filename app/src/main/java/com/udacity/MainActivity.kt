@@ -1,19 +1,23 @@
 package com.udacity
 
 import android.app.DownloadManager
+import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
+import android.graphics.Color
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.widget.RadioButton
 import android.widget.RadioGroup
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.NotificationCompat
+import androidx.core.content.ContextCompat
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.content_main.*
 
@@ -41,10 +45,14 @@ class MainActivity : AppCompatActivity() {
             if (radioGroup.checkedRadioButtonId<0) {
                 Toast.makeText(this, "Need to be select a file for download" ,Toast.LENGTH_LONG).show()
             } else {
+                Toast.makeText(this, "Download Stating...." ,Toast.LENGTH_LONG).show()
                 val radioButton = findViewById<RadioButton>(radioGroup.checkedRadioButtonId)
                 download(radioButton.text.toString())
+                Toast.makeText(this, "Download Finished !!" ,Toast.LENGTH_LONG).show()
             }
         }
+        notificationManager = ContextCompat.getSystemService(this,NotificationManager::class.java) as NotificationManager
+        createChannel()
     }
 
     private val receiver = object : BroadcastReceiver() {
@@ -72,7 +80,27 @@ class MainActivity : AppCompatActivity() {
     companion object {
         private const val URL =
             "https://github.com/udacity/nd940-c3-advanced-android-programming-project-starter/archive/master.zip"
-        private const val CHANNEL_ID = "channelId"
+        private const val CHANNEL_ID =R.string.channelId.toShort()
+    }
+
+    private fun createChannel() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val notificationChannel = NotificationChannel(
+                R.string.channelId.toString(),
+                R.string.channelName.toString(),
+                NotificationManager.IMPORTANCE_LOW
+            )
+                .apply {
+                    setShowBadge(false)
+                }
+
+            notificationChannel.enableLights(true)
+            notificationChannel.lightColor = Color.WHITE
+            notificationChannel.enableVibration(false)
+            notificationChannel.description = getString(R.string.downloadedFile)
+
+            notificationManager.createNotificationChannel(notificationChannel)
+        }
     }
 
 }
