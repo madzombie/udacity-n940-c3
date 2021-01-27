@@ -122,8 +122,8 @@ class MainActivity : AppCompatActivity() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             Log.d("NotCreate","OK")
             val notificationChannel = NotificationChannel(
-                R.string.channelId.toString(),
-                R.string.channelName.toString(),
+                getString(R.string.channelId),
+                    getString(R.string.channelName),
                 NotificationManager.IMPORTANCE_HIGH
             )
 
