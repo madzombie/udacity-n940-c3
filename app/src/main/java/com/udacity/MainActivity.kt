@@ -42,6 +42,9 @@ class MainActivity : AppCompatActivity() {
         radioGroup = findViewById(R.id.radio_group)
         registerReceiver(receiver, IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE))
 
+        notificationManager = ContextCompat.getSystemService(this,NotificationManager::class.java) as NotificationManager
+        createChannel()
+
         custom_button.setOnClickListener {
             if (radioGroup.checkedRadioButtonId<0) {
                 Toast.makeText(this, "Need to be select a file for download" ,Toast.LENGTH_LONG).show()
@@ -52,8 +55,7 @@ class MainActivity : AppCompatActivity() {
 
             }
         }
-        notificationManager = ContextCompat.getSystemService(this,NotificationManager::class.java) as NotificationManager
-        createChannel()
+
     }
 
 
@@ -108,8 +110,7 @@ class MainActivity : AppCompatActivity() {
                 R.string.channelId.toString(),
                 R.string.channelName.toString(),
                 NotificationManager.IMPORTANCE_LOW
-            )
-                .apply {
+            ).apply {
                     setShowBadge(false)
                 }
 

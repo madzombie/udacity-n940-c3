@@ -3,11 +3,11 @@ package com.udacity
 import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
+import android.util.Log
 import androidx.core.app.NotificationCompat
 
-const val NOTIFICATION_ID = 0
-const val FILENAME_EXTRA = "filename_extra"
-const val STATUS_EXTRA = "status_extra"
+
+
 
 fun NotificationManager.sendNotification(
     messageBody: String,
@@ -19,7 +19,8 @@ fun NotificationManager.sendNotification(
         applicationContext,
         applicationContext.getString(R.string.channelId)
     )
-        .setSmallIcon(R.drawable.ic_assistant_black_24dp)
+        .setSmallIcon(R.drawable.ic_launcher_background)
+     //   .setLargeIcon(BitmapFactory.decodeResource(applicationContext.resources,R.drawable.ic_launcher_background))
         .setContentTitle(
             applicationContext
                 .getString(R.string.notification_title)
@@ -29,5 +30,6 @@ fun NotificationManager.sendNotification(
         .setAutoCancel(true)
         .addAction(R.drawable.ic_assistant_black_24dp, "Check the status", pendingIntent)
 
-    notify(NOTIFICATION_ID, builder.build())
+    notify(1234, builder.build())
+    Log.d("NotUtil","OK")
 }
