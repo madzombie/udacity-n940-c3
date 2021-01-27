@@ -12,6 +12,7 @@ import android.graphics.Color
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.widget.RadioButton
 import android.widget.RadioGroup
 import android.widget.Toast
@@ -48,16 +49,34 @@ class MainActivity : AppCompatActivity() {
                 Toast.makeText(this, "Download Stating...." ,Toast.LENGTH_LONG).show()
                 val radioButton = findViewById<RadioButton>(radioGroup.checkedRadioButtonId)
                 download(radioButton.text.toString())
-                Toast.makeText(this, "Download Finished !!" ,Toast.LENGTH_LONG).show()
+
             }
         }
         notificationManager = ContextCompat.getSystemService(this,NotificationManager::class.java) as NotificationManager
         createChannel()
     }
 
+
     private val receiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context?, intent: Intent?) {
+            val contentIntent = Intent(applicationContext, DetailActivity::class.java)
+            pendingIntent = PendingIntent.getActivity(
+                applicationContext,
+                downloadID.toInt(),
+                contentIntent,
+                PendingIntent.FLAG_UPDATE_CURRENT
+            )
+
             val id = intent?.getLongExtra(DownloadManager.EXTRA_DOWNLOAD_ID, -1)
+
+            if (downloadID==id) {
+                Toast.makeText(context, "Download Finished !!" ,Toast.LENGTH_LONG).show()
+                Log.d("NotificationDownload","OK")
+
+                notificationManager.sendNotification(R.string.notification_description.toString(),applicationContext,pendingIntent)
+            } else {
+                notificationManager.sendNotification("Download Failed",applicationContext,pendingIntent)
+            }
         }
     }
 
@@ -102,5 +121,8 @@ class MainActivity : AppCompatActivity() {
             notificationManager.createNotificationChannel(notificationChannel)
         }
     }
+
+
+
 
 }

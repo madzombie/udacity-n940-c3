@@ -5,6 +5,6 @@
         <attr name="BTNbackgroundColor" format="color" />
         <attr name="textColor" format="color" />
     </declare-styleable>
-    <declare-styleable name="lbTextColor"></declare-styleable>
+
 
 </resources>
