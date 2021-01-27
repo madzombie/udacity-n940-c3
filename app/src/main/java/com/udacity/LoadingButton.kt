@@ -5,8 +5,8 @@ import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
-import android.renderscript.Sampler
 import android.util.AttributeSet
+import android.util.Log
 import android.view.View
 import androidx.core.content.ContextCompat
 import kotlin.properties.Delegates
@@ -35,7 +35,9 @@ class LoadingButton @JvmOverloads constructor(
                         progressW = animatedValue as Int
                         valueAnimator.repeatCount=ValueAnimator.INFINITE
                         valueAnimator.repeatMode=ValueAnimator.REVERSE
-                        angle=360f*it.animatedValue as Float
+                        Log.d("buttonState",it.animatedValue.javaClass.name)
+                        var deger =  it.animatedValue.toString().toFloat()
+                        angle=360f*deger as Float
                         invalidate()
                     }
                     duration=3000
@@ -105,6 +107,9 @@ class LoadingButton @JvmOverloads constructor(
         widthSize = w
         heightSize = h
         setMeasuredDimension(w, h)
+    }
+    fun setState (nState:ButtonState) {
+        buttonState=nState
     }
 
     override fun performClick(): Boolean {

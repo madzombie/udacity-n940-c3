@@ -4,6 +4,11 @@
 <!--   TODO: create custom attributes for the view-->
         <attr name="BTNbackgroundColor" format="color" />
         <attr name="textColor" format="color" />
+        <attr name="state" format="integer">
+            <enum name="completed" value="0"/>
+            <enum name="clicked" value="1"/>
+            <enum name="loading" value="2"/>
+        </attr>
     </declare-styleable>
 
 

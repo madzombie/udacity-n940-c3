@@ -8,17 +8,7 @@
     tools:context=".MainActivity"
     tools:showIn="@layout/activity_main">
 
-    <com.udacity.LoadingButton
-        app:BTNbackgroundColor="@color/colorPrimary"
-        app:textColor="@color/white"
-        android:id="@+id/custom_button"
-        android:layout_width="0dp"
-        android:layout_height="60dp"
-        android:layout_margin="20dp"
-        android:layout_marginBottom="20dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+
 
     <RadioGroup
         android:id="@+id/radio_group"
@@ -52,5 +42,19 @@
             android:layout_height="wrap_content"
             android:text="@string/starter_app" />
     </RadioGroup>
+
+    <com.udacity.LoadingButton
+        app:BTNbackgroundColor="@color/colorPrimary"
+        app:textColor="@color/white"
+        android:id="@+id/custom_button"
+        android:layout_width="0dp"
+        android:layout_height="60dp"
+        android:layout_margin="20dp"
+        android:layout_marginBottom="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

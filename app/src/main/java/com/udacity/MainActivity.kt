@@ -46,7 +46,9 @@ class MainActivity : AppCompatActivity() {
         createChannel()
 
         custom_button.setOnClickListener {
+            custom_button.setState(ButtonState.Clicked)
             if (radioGroup.checkedRadioButtonId<0) {
+                custom_button.setState(ButtonState.Completed)
                 Toast.makeText(this, "Need to be select a file for download" ,Toast.LENGTH_LONG).show()
             } else {
                 Toast.makeText(this, "Download Stating...." ,Toast.LENGTH_LONG).show()
@@ -79,11 +81,14 @@ class MainActivity : AppCompatActivity() {
             } else {
                 notificationManager.sendNotification("Download Failed",applicationContext,pendingIntent)
             }
+            custom_button.setState(ButtonState.Completed)
         }
     }
 
     private fun download(url:String) {
         url.let {
+            custom_button.setState(ButtonState.Loading)
+
             val request =
                 DownloadManager.Request(Uri.parse("$url/archive/master.zip"))
                     .setTitle(getString(R.string.app_name))
