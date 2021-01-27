@@ -32,7 +32,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var action: NotificationCompat.Action
 
     private lateinit var radioGroup: RadioGroup
-
+    private var downloadURL:String =""
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -69,8 +69,9 @@ class MainActivity : AppCompatActivity() {
         override fun onReceive(context: Context?, intent: Intent?) {
             notificationManager.cancelAll()
             val contentIntent = Intent(applicationContext, DetailActivity::class.java)
-            contentIntent.putExtra("id","Test")
-            contentIntent.putExtra("url","Test")
+            val id = intent?.getLongExtra(DownloadManager.EXTRA_DOWNLOAD_ID, -1)
+            contentIntent.putExtra("id",id.toString())
+            contentIntent.putExtra("url",downloadURL)
 
 
             pendingIntent = PendingIntent.getActivity(
@@ -80,7 +81,7 @@ class MainActivity : AppCompatActivity() {
                 PendingIntent.FLAG_UPDATE_CURRENT
             )
 
-            val id = intent?.getLongExtra(DownloadManager.EXTRA_DOWNLOAD_ID, -1)
+
 
             if (downloadID==id) {
                 Toast.makeText(context, "Download Finished !!" ,Toast.LENGTH_LONG).show()
@@ -96,6 +97,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun download(url:String) {
         url.let {
+            downloadURL=url
             custom_button.setState(ButtonState.Loading)
 
             val request =
