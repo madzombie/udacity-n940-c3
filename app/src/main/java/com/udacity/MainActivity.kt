@@ -69,8 +69,8 @@ class MainActivity : AppCompatActivity() {
         override fun onReceive(context: Context?, intent: Intent?) {
             notificationManager.cancelAll()
             val contentIntent = Intent(applicationContext, DetailActivity::class.java)
-            contentIntent.putExtra("id","")
-            contentIntent.putExtra("url","")
+            contentIntent.putExtra("id","Test")
+            contentIntent.putExtra("url","Test")
 
 
             pendingIntent = PendingIntent.getActivity(

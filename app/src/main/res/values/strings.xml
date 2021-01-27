@@ -19,4 +19,6 @@
     <string name="starter_app">https://github.com/udacity/nd940-c3-advanced-android-programming-project-starter</string>
     <string name="downloadedFile">Download finished</string>
     <string name="channelName">Download</string>
+    <string name="error">could not download file</string>
+    <string name="ok">File is downloaded</string>
 </resources>
