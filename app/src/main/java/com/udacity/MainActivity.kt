@@ -70,7 +70,8 @@ class MainActivity : AppCompatActivity() {
             notificationManager.cancelAll()
             val contentIntent = Intent(applicationContext, DetailActivity::class.java)
             val id = intent?.getLongExtra(DownloadManager.EXTRA_DOWNLOAD_ID, -1)
-            contentIntent.putExtra("id",id.toString())
+
+            contentIntent.putExtra("id",id)
             contentIntent.putExtra("url",downloadURL)
 
 
@@ -111,6 +112,7 @@ class MainActivity : AppCompatActivity() {
             val downloadManager = getSystemService(DOWNLOAD_SERVICE) as DownloadManager
             downloadID =
                 downloadManager.enqueue(request)// enqueue puts the download request in the queue.
+
         }
     }
 
