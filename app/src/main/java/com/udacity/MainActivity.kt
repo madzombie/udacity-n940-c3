@@ -37,6 +37,10 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        notificationManager = ContextCompat.getSystemService(
+            applicationContext,
+            NotificationManager::class.java
+        ) as NotificationManager
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
         radioGroup = findViewById(R.id.radio_group)
@@ -63,7 +67,12 @@ class MainActivity : AppCompatActivity() {
 
     private val receiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context?, intent: Intent?) {
+            notificationManager.cancelAll()
             val contentIntent = Intent(applicationContext, DetailActivity::class.java)
+            contentIntent.putExtra("id","")
+            contentIntent.putExtra("url","")
+
+
             pendingIntent = PendingIntent.getActivity(
                 applicationContext,
                 downloadID.toInt(),
@@ -111,20 +120,22 @@ class MainActivity : AppCompatActivity() {
 
     private fun createChannel() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            Log.d("NotCreate","OK")
             val notificationChannel = NotificationChannel(
                 R.string.channelId.toString(),
                 R.string.channelName.toString(),
-                NotificationManager.IMPORTANCE_LOW
-            ).apply {
-                    setShowBadge(false)
-                }
+                NotificationManager.IMPORTANCE_HIGH
+            )
 
             notificationChannel.enableLights(true)
-            notificationChannel.lightColor = Color.WHITE
-            notificationChannel.enableVibration(false)
+            notificationChannel.lightColor = Color.RED
+            notificationChannel.enableVibration(true)
             notificationChannel.description = getString(R.string.downloadedFile)
+            notificationManager = getSystemService(NotificationManager::class.java)
 
             notificationManager.createNotificationChannel(notificationChannel)
+        } else {
+            Log.d("NotCreate","ERROR")
         }
     }
 

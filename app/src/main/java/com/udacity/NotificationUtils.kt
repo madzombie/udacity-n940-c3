@@ -29,6 +29,7 @@ fun NotificationManager.sendNotification(
         .setContentIntent(pendingIntent)
         .setAutoCancel(true)
         .addAction(R.drawable.ic_assistant_black_24dp, "Check the status", pendingIntent)
+        .setPriority(NotificationCompat.PRIORITY_HIGH)
 
     notify(1234, builder.build())
     Log.d("NotUtil","OK")
