@@ -20,12 +20,15 @@ class LoadingButton @JvmOverloads constructor(
     private lateinit var paint:Paint
     private var valueAnimator = ValueAnimator()
     private var progressW:Int=0
-    private val BTNbackgroundColor = Color.LTGRAY
-
+    private var BTNbackgroundColor = Color.LTGRAY
+    private var COMPLETED:Long =0L
+    private var CLICKED:Long=1L
+    private var LOADING:Long=2L
     private var circleR:Float = 0f
     private var circleM :Float=0f
     private var angle:Float=0f
     private var radius:Float=50f
+    private var btnText="Download"
 
     private var buttonState: ButtonState by Delegates.observable<ButtonState>(ButtonState.Completed) { p, old, new ->
         when (new) {
@@ -37,7 +40,7 @@ class LoadingButton @JvmOverloads constructor(
                         valueAnimator.repeatMode=ValueAnimator.REVERSE
                         Log.d("buttonState",it.animatedValue.javaClass.name)
                         var deger =  it.animatedValue.toString().toFloat()
-                        angle=360f*deger as Float
+                        angle=360f*deger
                         invalidate()
                     }
                     duration=3000
@@ -47,6 +50,8 @@ class LoadingButton @JvmOverloads constructor(
 
             ButtonState.Completed-> {
                 valueAnimator.cancel()
+                btnText="Download"
+                angle=0f
                 progressW=0
                 invalidate()
             }
@@ -70,6 +75,8 @@ class LoadingButton @JvmOverloads constructor(
         widthSize= w.toFloat().toInt()
         circleR=widthSize-radius
         circleM=(h/2)-radius
+        circleR=h*0.8f
+        circleM=h* 0.2f
 
 
     }
@@ -84,14 +91,14 @@ class LoadingButton @JvmOverloads constructor(
         paint.textSize=60f
         paint.textAlign=Paint.Align.CENTER
 
-        val btnText = when(buttonState) {
+        btnText = when(buttonState) {
             ButtonState.Completed->"Download"
             ButtonState.Clicked->"Clicked OK!"
             ButtonState.Loading->"Loading"
         }
         canvas.drawText(btnText,(widthSize/2).toFloat(),(heightSize/2).toFloat(),paint)
         paint.color=Color.YELLOW
-        canvas.drawArc(circleR,circleM,widthSize-radius,(heightSize/2)+radius,0f,angle,true,paint)
+        canvas.drawArc(circleR,circleM,widthSize-circleM,heightSize - circleM,0f,angle,true,paint)
 
 
     }
@@ -118,6 +125,29 @@ class LoadingButton @JvmOverloads constructor(
         }
         invalidate()
         return true
+    }
+    private fun setAttributes(attrs: AttributeSet?) {
+        val typedArray = context.theme.obtainStyledAttributes(
+            attrs,
+            R.styleable.LoadingButton,
+            0,
+            0
+        )
+
+        with(typedArray) {
+            BTNbackgroundColor = getColor(
+                R.styleable.LoadingButton_BTNbackgroundColor,
+                BTNbackgroundColor
+            )
+        }
+
+        buttonState= when(typedArray.getInt(R.styleable.LoadingButton_state,COMPLETED.toInt()).toLong()) {
+            LOADING -> ButtonState.Loading
+            CLICKED->ButtonState.Clicked
+            else -> ButtonState.Completed
+        }
+
+        typedArray.recycle()
     }
 
 }
