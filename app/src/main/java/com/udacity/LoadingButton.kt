@@ -29,6 +29,7 @@ class LoadingButton @JvmOverloads constructor(
     private var angle:Float=0f
     private var radius:Float=50f
     private var btnText="Download"
+    private var circleAnimator = ValueAnimator()
 
     private var buttonState: ButtonState by Delegates.observable<ButtonState>(ButtonState.Completed) { p, old, new ->
         when (new) {
@@ -43,7 +44,17 @@ class LoadingButton @JvmOverloads constructor(
                         angle=360f*deger
                         invalidate()
                     }
-                    duration=3000
+                    duration=500
+                    start()
+                }
+
+                circleAnimator = ValueAnimator.ofInt(0, 360).apply {
+                    duration  = 2000
+                    addUpdateListener { valueAnimator ->
+                        angle = (valueAnimator.animatedValue as Int).toFloat()
+                        valueAnimator.repeatCount = ValueAnimator.INFINITE
+                        invalidate()
+                    }
                     start()
                 }
             }
@@ -53,9 +64,14 @@ class LoadingButton @JvmOverloads constructor(
                 btnText="Download"
                 angle=0f
                 progressW=0
+
+                circleAnimator.end()
+
                 invalidate()
+
             }
             // buttonState.Clicked end
+
         }
     }
 
@@ -67,6 +83,7 @@ class LoadingButton @JvmOverloads constructor(
             color= ContextCompat.getColor(context, R.color.colorPrimary)
             textSize=resources.getDimension(R.dimen.default_text_size)
         }
+
     }
 
 
