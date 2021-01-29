@@ -52,7 +52,7 @@ class MainActivity : AppCompatActivity() {
         custom_button.setOnClickListener {
             custom_button.setState(ButtonState.Clicked)
             if (radioGroup.checkedRadioButtonId<0) {
-                custom_button.setState(ButtonState.Completed)
+
                 Toast.makeText(this, "Need to be select a file for download" ,Toast.LENGTH_LONG).show()
             } else {
                 Toast.makeText(this, "Download Stating...." ,Toast.LENGTH_LONG).show()

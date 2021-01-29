@@ -5,8 +5,29 @@
     <Transition
         motion:constraintSetEnd="@+id/end"
         motion:constraintSetStart="@id/start"
-        motion:duration="1000">
-        <OnClick/>
+        motion:duration="2000"
+        motion:autoTransition="animateToEnd">
+        <KeyFrameSet>
+            <KeyAttribute
+                motion:framePosition="0"
+                motion:motionTarget="@id/status_textView"
+                android:alpha="0.0" />
+            <KeyAttribute
+                motion:framePosition="100"
+                motion:motionTarget="@id/status_textView"
+                android:alpha="1.0" />
+            <KeyAttribute
+                motion:framePosition="0"
+                motion:motionTarget="@id/filename_textView"
+                android:alpha="0.0" />
+            <KeyAttribute
+                motion:framePosition="100"
+                motion:motionTarget="@id/filename_textView"
+                android:alpha="1.0" />
+        </KeyFrameSet>
+        <OnSwipe
+            motion:touchAnchorId="@+id/background"
+            motion:touchAnchorSide="bottom" />
     </Transition>
 
 
